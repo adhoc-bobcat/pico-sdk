@@ -1,5 +1,7 @@
-def declare_flag_choices(flag, choices):
-    """Declares a `config_setting` for each known choice for the provided flag.
+"""Utilities for creating multiple choice flags."""
+
+def declare_flag_choices(name, flag, choices):
+    """Declares a `config_setting` for a series of choices for a flag.
 
     The name of each config setting uses the name of the `config_setting` is:
         [flag label name]_[choice]
@@ -7,18 +9,16 @@ def declare_flag_choices(flag, choices):
     This can be used with select_choice() to map `config_setting`s to values.
 
     Args:
+      name: The name of the rule.
       flag: The flag that guides the declared `config_setting`s.
-      pkg: The package that declare_flag_choices() was declared in.
-      choice_map: A mapping of distinct choices to
+      choices: An array giving the choices for the flag.
     """
     flag_name = flag.split(":")[1]
-    [
+    for choice in choices:
         native.config_setting(
             name = "{}_{}".format(flag_name, choice),
             flag_values = {flag: choice},
         )
-        for choice in choices
-    ]
 
 def flag_choice(flag, pkg, choice_map):
     """Creates a `select()` based on choices declared by `declare_choices()`.
