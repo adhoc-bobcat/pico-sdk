@@ -1,5 +1,4 @@
 load("@pico-sdk//bazel:defs.bzl", "compatible_with_pico_w")
-load("@rules_cc//cc:cc_library.bzl", "cc_library")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -19,7 +18,7 @@ cc_library(
         "//conditions:default": [
             "CYW43_LWIP=1",
         ],
-    }) + select({
+    })+ select({
         "@pico-sdk//bazel/constraint:pico_btstack_config_unset": [
             "CYW43_ENABLE_BLUETOOTH=0",
         ],
